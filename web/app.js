@@ -8,6 +8,8 @@ const fallbackFiles = {
   diagnosisBreakdown: "../project/mock_api/v1/diagnosis_breakdown_placement.json",
   diagnosisTrend: "../project/mock_api/v1/diagnosis_trend_audience_2.json",
   experiments: "../project/mock_api/v1/experiments.json",
+  experimentSummary: "../project/mock_api/v1/experiment_1_summary.json",
+  experimentTrend: "../project/mock_api/v1/experiment_1_trend_day.json",
 };
 
 const filters = {
@@ -296,8 +298,40 @@ async function renderDiagnosis() {
 }
 
 async function renderExperiments() {
-  const payload = await readJson(fallbackFiles.experiments);
-  const item = payload.items?.[0];
+  const [listPayload, summary, trend] = await Promise.all([
+    readJson(fallbackFiles.experiments),
+    readJson(fallbackFiles.experimentSummary),
+    readJson(fallbackFiles.experimentTrend),
+  ]);
+  const item = listPayload.items?.[0];
+  const control = summary.groups?.find((g) => g.experiment_group === "control");
+  const test = summary.groups?.find((g) => g.experiment_group === "test");
+
+  const dailyMap = new Map();
+  (trend.series || []).forEach((row) => {
+    const key = row.period_key;
+    if (!dailyMap.has(key)) {
+      dailyMap.set(key, { period_key: key });
+    }
+    dailyMap.get(key)[row.experiment_group] = row.metrics;
+  });
+  const dailyRows = [...dailyMap.values()]
+    .sort((a, b) => a.period_key.localeCompare(b.period_key))
+    .map((row) => {
+      const date = `${row.period_key.slice(0, 4)}-${row.period_key.slice(4, 6)}-${row.period_key.slice(6, 8)}`;
+      return `
+      <tr>
+        <td>${date}</td>
+        <td>${formatPercent(row.control?.payment_cvr)}</td>
+        <td>${formatPercent(row.test?.payment_cvr)}</td>
+        <td>${formatDecimal(row.control?.payment_roi, 4)}</td>
+        <td>${formatDecimal(row.test?.payment_roi, 4)}</td>
+      </tr>
+    `;
+    })
+    .join("");
+
+  const recommendScale = (summary.comparison?.delta_payment_roi_vs_control ?? 0) > 0;
 
   app.innerHTML = `
     <section class="panel">
@@ -311,7 +345,67 @@ async function renderExperiments() {
         <div class="card"><div class="label">状态</div><div class="value">${item?.status ?? "--"}</div></div>
         <div class="card"><div class="label">时间范围</div><div class="value">${item?.start_date ?? "--"} ~ ${item?.end_date ?? "--"}</div></div>
       </div>
-      <div class="hint">下一步：在 Step 7 分支补 Control/Test 对比结果卡与趋势。</div>
+      <div class="hint">目标：${summary.objective ?? "--"}</div>
+    </section>
+    <section class="panel">
+      <h2>Control / Test 核心结果对比</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>指标</th>
+            <th>Control</th>
+            <th>Test</th>
+            <th>差异（Test - Control）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CTR</td>
+            <td>${formatPercent(control?.metrics.ctr)}</td>
+            <td>${formatPercent(test?.metrics.ctr)}</td>
+            <td>${formatPercent(summary.comparison?.delta_ctr_vs_control)}</td>
+          </tr>
+          <tr>
+            <td>支付转化率</td>
+            <td>${formatPercent(control?.metrics.payment_cvr)}</td>
+            <td>${formatPercent(test?.metrics.payment_cvr)}</td>
+            <td>${formatPercent(summary.comparison?.delta_payment_cvr_vs_control)}</td>
+          </tr>
+          <tr>
+            <td>转化成本</td>
+            <td>${formatDecimal(control?.metrics.cpa, 4)}</td>
+            <td>${formatDecimal(test?.metrics.cpa, 4)}</td>
+            <td>${formatDecimal(summary.comparison?.delta_cpa_vs_control, 4)}</td>
+          </tr>
+          <tr>
+            <td>支付ROI</td>
+            <td>${formatDecimal(control?.metrics.payment_roi, 4)}</td>
+            <td>${formatDecimal(test?.metrics.payment_roi, 4)}</td>
+            <td>${formatDecimal(summary.comparison?.delta_payment_roi_vs_control, 4)}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="panel">
+      <h2>实验期日趋势</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>Control 支付转化率</th>
+            <th>Test 支付转化率</th>
+            <th>Control ROI</th>
+            <th>Test ROI</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${dailyRows}
+        </tbody>
+      </table>
+      <div class="hint">
+        结论：${recommendScale ? "Test 在核心效率指标上优于 Control，建议进入放量候选。"
+    : "Test 尚未稳定优于 Control，建议继续观察或迭代素材。"}
+      </div>
     </section>
   `;
 }
