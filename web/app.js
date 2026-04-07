@@ -4,6 +4,7 @@ const applyFilterBtn = document.getElementById("apply-filter");
 
 const fallbackFiles = {
   overviewSummary: "../project/mock_api/v1/overview_summary.json",
+  overviewTrend: "../project/mock_api/v1/overview_trend_day.json",
   diagnosisBreakdown: "../project/mock_api/v1/diagnosis_breakdown_placement.json",
   experiments: "../project/mock_api/v1/experiments.json",
 };
@@ -18,6 +19,16 @@ function formatNumber(value) {
   if (value === null || value === undefined) return "--";
   if (typeof value !== "number") return String(value);
   return value.toLocaleString("zh-CN");
+}
+
+function formatPercent(value) {
+  if (value === null || value === undefined) return "--";
+  return `${(value * 100).toFixed(2)}%`;
+}
+
+function formatDecimal(value, digits = 2) {
+  if (value === null || value === undefined) return "--";
+  return value.toFixed(digits);
 }
 
 async function readJson(path) {
@@ -50,27 +61,92 @@ function currentFilterText() {
 }
 
 async function renderOverview() {
-  const payload = await readJson(fallbackFiles.overviewSummary);
-  const m = payload.metrics;
+  const [summary, trend] = await Promise.all([
+    readJson(fallbackFiles.overviewSummary),
+    readJson(fallbackFiles.overviewTrend),
+  ]);
+  const m = summary.metrics;
+  const c = summary.comparison;
+
+  const metricItems = [
+    { label: "曝光量", value: formatNumber(m.impressions) },
+    { label: "点击量", value: formatNumber(m.clicks) },
+    { label: "点击率", value: formatPercent(m.ctr) },
+    { label: "花费", value: formatNumber(m.spend) },
+    { label: "点击均价", value: formatDecimal(m.cpc, 3) },
+    { label: "千次曝光成本", value: formatDecimal(m.cpm, 2) },
+    { label: "支付转化量", value: formatNumber(m.payment_conversions) },
+    { label: "支付转化率", value: formatPercent(m.payment_cvr) },
+    { label: "转化成本", value: formatDecimal(m.cpa, 2) },
+    { label: "支付金额", value: formatNumber(m.payment_revenue) },
+    { label: "支付ROI", value: formatDecimal(m.payment_roi, 4) },
+  ];
+
+  const cardsHtml = metricItems
+    .map(
+      (item) => `
+      <div class="card">
+        <div class="label">${item.label}</div>
+        <div class="value">${item.value}</div>
+      </div>
+    `
+    )
+    .join("");
+
+  const trendRows = trend.series
+    .map(
+      (s) => `
+      <tr>
+        <td>${s.period_start_date}</td>
+        <td>${s.simulation_stage_code}</td>
+        <td>${formatNumber(s.metrics.spend)}</td>
+        <td>${formatNumber(s.metrics.payment_conversions)}</td>
+        <td>${formatDecimal(s.metrics.payment_roi, 4)}</td>
+      </tr>
+    `
+    )
+    .join("");
 
   app.innerHTML = `
     <section class="panel">
       <h2>账户总览</h2>
       <p>${currentFilterText()}</p>
+      <div class="hint">周同比：${formatPercent(c.wow_change_rate)} | 月同比：${formatPercent(c.mom_change_rate)}</div>
     </section>
     <section class="panel">
       <h2>核心指标卡</h2>
       <div class="cards">
-        <div class="card"><div class="label">曝光量</div><div class="value">${formatNumber(m.impressions)}</div></div>
-        <div class="card"><div class="label">点击量</div><div class="value">${formatNumber(m.clicks)}</div></div>
-        <div class="card"><div class="label">花费</div><div class="value">${formatNumber(m.spend)}</div></div>
-        <div class="card"><div class="label">支付转化量</div><div class="value">${formatNumber(m.payment_conversions)}</div></div>
-        <div class="card"><div class="label">支付金额</div><div class="value">${formatNumber(m.payment_revenue)}</div></div>
-        <div class="card"><div class="label">支付ROI</div><div class="value">${formatNumber(m.payment_roi)}</div></div>
+        ${cardsHtml}
       </div>
-      <div class="hint">${payload.anomaly_summary.signal_message}</div>
+    </section>
+    <section class="panel">
+      <h2>阶段趋势（按天）</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>阶段</th>
+            <th>花费</th>
+            <th>支付转化量</th>
+            <th>支付ROI</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${trendRows}
+        </tbody>
+      </table>
+    </section>
+    <section class="panel">
+      <h2>异常摘要</h2>
+      <p>${summary.anomaly_summary.signal_title}</p>
+      <div class="hint">${summary.anomaly_summary.signal_message}</div>
+      <button id="jump-diagnosis" type="button">查看分维诊断</button>
     </section>
   `;
+
+  document.getElementById("jump-diagnosis")?.addEventListener("click", () => {
+    window.location.hash = "#/diagnosis";
+  });
 }
 
 async function renderDiagnosis() {
