@@ -1,25 +1,22 @@
-# 广告投放分析平台 MVP 敏捷开发执行文档（非技术背景版）
+# 广告投放分析平台 MVP 敏捷开发执行文档（Git 并行开发版）
 
 ## 1. 文档目标
 
-这份文档用于把“最终做出完整网页”拆成一系列最小可交付步骤。  
-每一步都必须满足：`有可见结果`、`可验证`、`可回退`。
+这份文档把“做出完整网页”拆成可并行推进的最小交付步骤，目标是：
+- 交付完整 3 页面 Demo（总览 / 分维诊断 / A/B 测试）
+- 在 Git 下并行开发，减少互相阻塞
+- 每一步都可验证、可回退、可合并
 
-最终成品范围固定为 3 个页面：
-- 总览
-- 分维诊断
-- A/B 测试预留区
+## 2. V1 范围冻结（先定边界，再并行）
 
-## 2. 先固定边界（不再反复改方向）
-
-本轮 V1 固定以下边界，确保敏捷推进不失控：
+本轮 V1 固定：
 - 核心用户：广告投放运营/优化师
 - 核心目标：支付转化监控 + 异常归因
 - 核心维度：人群 / 资源位 / 创意
 - 时间视角：日 / 周 / 月（含周同比、月同比）
 - 数据来源：模拟数据（非真实线上数据）
 
-边界来源文档：
+范围依据：
 - [PRD.md](/Users/sunjialu/Library/Mobile Documents/com~apple~CloudDocs/Project/Resume/project/PRD.md)
 - [page_spec.md](/Users/sunjialu/Library/Mobile Documents/com~apple~CloudDocs/Project/Resume/project/page_spec.md)
 - [metric_dictionary.md](/Users/sunjialu/Library/Mobile Documents/com~apple~CloudDocs/Project/Resume/project/metric_dictionary.md)
@@ -27,182 +24,186 @@
 - [api_contract.md](/Users/sunjialu/Library/Mobile Documents/com~apple~CloudDocs/Project/Resume/project/api_contract.md)
 - [validation_plan.md](/Users/sunjialu/Library/Mobile Documents/com~apple~CloudDocs/Project/Resume/project/validation_plan.md)
 
-## 3. 你只需要记住的敏捷规则
+## 3. Git 并行开发规则（V1）
 
-1. 一次只做一个“最小闭环”，不并行做多个大模块。  
-2. 每完成一步就验收，未通过不进入下一步。  
-3. 页面实现优先“能跑通”，再做视觉优化。  
-4. 所有口径以指标字典为准，不在页面里临时改公式。  
-5. 新增需求进入 V2 待办，不打断当前 V1。
+## 3.1 分支模型
 
-## 4. 单步任务模板（每次都按这个执行）
+- `main`：只放“可演示稳定版本”
+- `develop`：日常集成分支
+- `feature/*`：并行功能分支
+- `hotfix/*`：仅修紧急问题
 
-每个任务卡必须写清 5 件事：
-- 目标：这一步只解决一个问题
-- 输入：依赖哪些现有文档/数据
-- 动作：实际开发动作（最多 3-5 条）
-- 产出：可以截图或直接运行验证的结果
-- 验收：通过条件（DoD）
+## 3.2 分支命名规范
 
-建议每步时长：`45-90 分钟`。  
-如果超过 90 分钟还没闭环，立即拆小。
+- `feature/data-step1-base`
+- `feature/data-step2-mart`
+- `feature/api-step3-contract`
+- `feature/ui-step4-shell`
+- `feature/ui-step5-overview`
+- `feature/ui-step6-diagnosis`
+- `feature/ui-step7-experiment`
 
-## 5. V1 迭代路线图（从 0 到完整网页）
+## 3.3 提交与合并规范
 
-## Step 0：冻结 V1 需求（30 分钟）
+- 每个分支只做一个主题，不混改
+- 提交信息格式：`type(scope): summary`
+- 推荐 `type`：`feat` / `fix` / `docs` / `refactor`
+- 合并目标：`feature/* -> develop`，封版时 `develop -> main`
+- 合并方式：优先 `squash merge`，保持历史清晰
 
-- 目标：防止做着做着范围膨胀
-- 输入：PRD、page_spec
+## 3.4 合并门禁（必须同时满足）
+
+- 代码可运行
+- 指标口径无冲突
+- 接口字段符合 `api_contract.md`
+- 页面行为符合 `page_spec.md`
+- 本步骤验收项全部通过
+
+## 4. 并行任务拆分（3 条工作线）
+
+Lane A（数据线）：
+- 负责数据库、聚合查询、指标重算
+- 关键产出：可复现的 overview / diagnosis / experiment 数据结果
+
+Lane B（接口线）：
+- 负责 API 契约落地、mock 返回、字段稳定性
+- 关键产出：前端可直接消费的接口响应
+
+Lane C（前端线）：
+- 负责路由骨架、3 个页面、交互链路
+- 关键产出：可演示的页面闭环
+
+说明：
+- 如果你目前一个人开发，也照样用 3 条 Lane 的分支方式推进。  
+- 这样做的价值是：即使串行开发，也能控制改动范围并降低回滚成本。
+
+## 5. 并行迭代路线图（从 0 到完整网页）
+
+## Step 0：初始化 Git 工作流（30 分钟）
+
+- 目标：建立并行开发底座
 - 动作：
-  - 确认只做 3 个页面
-  - 确认不做投放创建、自动出价、权限系统
-  - 确认“支付转化”为唯一核心目标
-- 产出：V1 Scope 清单（可直接写在任务看板）
-- 验收：团队对“做什么/不做什么”无歧义
+  - 建立 `main` 与 `develop`
+  - 创建首批 `feature/*` 分支
+  - 写清每个分支的职责
+- 验收：
+  - 任何任务都能映射到唯一分支
+  - 团队知道“改哪里、合到哪”
 
-## Step 1：数据层可跑通（60 分钟）
+## Step 1：数据底座先跑通（60 分钟，Lane A）
 
-- 目标：让底层数据可被稳定读取
 - 输入：`Database/schema.sql`、`Database/seed_dimensions.sql`、`Database/sample_fct_ad_performance_daily.csv`
 - 动作：
-  - 建好本地数据库结构
-  - 导入维表和事实表样例数据
-  - 执行基础约束检查（主键、外键、非负、链路约束）
-- 产出：可查询的数据底座
+  - 建库、导数
+  - 执行主键/外键/业务约束校验
 - 验收：
   - 主键唯一
   - `clicks <= impressions`
   - `payment_conversions <= clicks`
 
-## Step 2：指标计算可复现（60 分钟）
+## Sprint A：三线并行（每条线 45-90 分钟）
 
-- 目标：确保公式在数据层可重复算出
+Step A1（Lane A，数据聚合）：
 - 输入：`metric_dictionary.md`、`mart_spec.md`
-- 动作：
-  - 建立账户级聚合查询（总览）
-  - 建立分维聚合查询（诊断）
-  - 建立实验组聚合查询（A/B）
-- 产出：3 类聚合结果（对应 3 个页面）
-- 验收：
-  - `ctr/cpc/cpm/payment_cvr/cpa/payment_roi` 与字典一致
-  - 比率类指标均为“汇总后重算”
+- 动作：完成账户级、分维级、实验级聚合查询
+- 验收：比率类指标全部“汇总后重算”
 
-## Step 3：接口层可消费（45-60 分钟）
-
-- 目标：前端不直接读底表，只读统一接口
+Step A2（Lane B，接口契约）：
 - 输入：`api_contract.md`、`mock_api/v1/*.json`
-- 动作：
-  - 按契约准备接口返回结构（先 mock）
-  - 检查字段命名、空值、枚举是否符合约定
-  - 逐个接口联调最小 happy path
-- 产出：稳定接口层（至少 mock 可用）
-- 验收：
-  - 关键接口都能返回 200
-  - 字段全部 `snake_case`
-  - 空值统一 `null`
+- 动作：落地 mock 接口结构并对齐字段
+- 验收：`snake_case`、`null` 约定、枚举值全部一致
 
-## Step 4：前端骨架跑通（60 分钟）
-
-- 目标：先有“能跳转的壳”，再填内容
+Step A3（Lane C，页面骨架）：
 - 输入：`page_spec.md`
-- 动作：
-  - 搭建 3 页面路由
-  - 做统一筛选区（时间范围、粒度）
-  - 完成页面间跳转链路
-- 产出：可导航、可切换的页面骨架
-- 验收：
-  - 能从总览进入分维诊断
-  - 能从分维诊断进入 A/B 区
+- 动作：完成 3 页面路由、基础筛选区、跨页导航
+- 验收：总览 -> 诊断 -> A/B 跳转可用
 
-## Step 5：总览页闭环（60-90 分钟）
+## Gate 1：第一次集成（30 分钟）
 
-- 目标：完成第一条“可讲故事”的闭环
-- 输入：`overview_summary.json`、`overview_trend_day.json`
-- 动作：
-  - 渲染核心指标卡
-  - 渲染趋势图
-  - 渲染异常摘要并可跳转诊断页
-- 产出：总览页可独立演示
-- 验收：
-  - 支持日/周/月视角切换
-  - 核心指标与趋势一致
-  - 异常摘要可引导下钻
+- 把 Step A1/A2/A3 合并到 `develop`
+- 解决冲突后做一次端到端冒烟
+- 通过后进入下一轮并行
 
-## Step 6：分维诊断页闭环（60-90 分钟）
+## Sprint B：页面闭环并行（每条线 45-90 分钟）
 
-- 目标：完成“发现异常 -> 定位原因”
-- 输入：`diagnosis_breakdown_placement.json`、`diagnosis_trend_audience_2.json`
-- 动作：
-  - 渲染维度 tab（人群/资源位/创意）
-  - 渲染分维表格和排序
-  - 渲染选中维度趋势与诊断说明
-- 产出：诊断页可独立演示
-- 验收：
-  - 可定位“谁在带量、谁在拖效”
-  - 从总览带参进入后状态正确
+Step B1（Lane C，总代码主线）：
+- 总览页：卡片、趋势、异常摘要
+- 验收：支持日/周/月切换，可从摘要进入诊断页
 
-## Step 7：A/B 测试页闭环（45-60 分钟）
+Step B2（Lane C 或协作分支）：
+- 分维诊断页：维度 tab、表格排序、趋势详情、诊断结论
+- 验收：可解释“谁在带量、谁在拖效”
 
-- 目标：完成“验证优化动作”的展示闭环
-- 输入：`experiments.json`、`experiment_1_summary.json`、`experiment_1_trend_day.json`
-- 动作：
-  - 渲染实验概览
-  - 渲染 Control/Test 核心结果对比
-  - 渲染实验结论区
-- 产出：A/B 页面可独立演示
-- 验收：
-  - 能清楚展示 Test 是否优于 Control
-  - 可解释结果边界（只是 MVP 模拟验证）
+Step B3（Lane C 或协作分支）：
+- A/B 页：实验概览、Control/Test 对比、结论区
+- 验收：能清楚表达 Test 是否优于 Control
 
-## Step 8：联调回归与演示封版（60 分钟）
+## Gate 2：封版前集成（45 分钟）
 
-- 目标：形成可投递/可面试展示版本
-- 输入：`validation_plan.md`
-- 动作：
-  - 按验证计划做全链路检查
-  - 修复字段冲突、口径冲突、交互断点
-  - 固化演示脚本（进入路径 + 关键讲点）
-- 产出：V1 封版 Demo
-- 验收：
-  - `整体效果 -> 异常指标 -> 异常原因` 在 3 次点击内完成
-  - 所有页面与契约字段一致
-  - 无明显报错或空白页
+- 合并 Sprint B 全部分支到 `develop`
+- 按 `validation_plan.md` 做联调
+- 修复口径、字段、交互断点
 
-## 6. 今晚与明天的执行节奏（建议）
+## Step 8：发布 V1（30 分钟）
 
-今晚（优先“可投递可演示”）：
-- 完成 Step 0 到 Step 5
-- 至少保证总览页闭环可演示
+- `develop` 打 tag（例如 `v1.0-demo`）
+- 合并到 `main`
+- 固化演示脚本和版本说明
 
-明天（优先“完整性和可面试解释”）：
-- 完成 Step 6 到 Step 8
-- 打磨诊断逻辑、实验解释、讲稿
+## 6. Git 最小操作清单（非技术背景可照抄）
 
-## 7. 高风险点与止损机制
+```bash
+git checkout develop
+git pull
+git checkout -b feature/ui-step5-overview
 
-高风险点：
-- 指标口径被前端二次改写，导致页面与文档不一致
-- 先堆 UI 再补数据，最后发现链路不通
-- 一次做太多导致无法验收
+# 开发并提交
+git add .
+git commit -m "feat(ui): finish overview cards and trend"
+git push -u origin feature/ui-step5-overview
+```
 
-止损机制：
-- 任一步骤卡住 20 分钟以上，立即降级为“先 mock 通路”
-- 任一模块出现口径争议，立即回到 `metric_dictionary.md`
-- 任一页面无数据，先保证空态可读，再排查数据
+每天开始前同步：
 
-## 8. Definition of Done（V1 总验收）
+```bash
+git checkout develop
+git pull
+git checkout feature/ui-step5-overview
+git rebase develop
+```
 
-满足以下条件即视为“完整体网页 V1”：
-- 3 个页面都可访问、可交互、可演示
-- 所有核心指标公式与 `metric_dictionary.md` 一致
-- 接口字段与 `api_contract.md` 一致
-- 页面行为与 `page_spec.md` 一致
-- 验证项按 `validation_plan.md` 通过
+## 7. 今晚与明天节奏（并行版）
 
-## 9. 你每轮只需要做的 3 个动作
+今晚：
+- 完成 Step 0、Step 1、Sprint A、Gate 1
+- 至少产出“可跳转页面骨架 + 可用 mock 接口”
 
-1. 选定下一步（只选一个 Step，不并行）。  
-2. 看该 Step 的输入文档，确认“本步目标”。  
-3. 完成后按“验收标准”逐条打勾，再进入下一步。
+明天：
+- 完成 Sprint B、Gate 2、Step 8
+- 形成可演示封版版本
 
-这样推进，你不需要技术背景也能稳定产出：每次都拿到一个真实、可验证、可复用的增量结果。
+## 8. 风险与止损机制
+
+高风险：
+- 多分支并行导致冲突累计
+- 指标在不同分支被重复定义
+- 页面先跑、数据后补，导致返工
+
+止损：
+- 每天固定 1 次 `develop` 同步
+- 任何口径冲突，以 `metric_dictionary.md` 为唯一标准
+- 单分支卡住超过 20 分钟，先提交最小可运行版本再继续
+
+## 9. V1 总验收（Definition of Done）
+
+以下全部满足才算完成：
+- `main` 上有可运行、可演示版本
+- 3 个页面可访问、可交互
+- 指标口径、接口字段、页面行为均与文档一致
+- `validation_plan.md` 的关键检查通过
+
+## 10. 你每轮只做的 3 件事
+
+1. 只开启一个目标分支，完成一个最小闭环。  
+2. 完成后先验收，再发起合并，不跳步。  
+3. 每天至少一次把分支和 `develop` 对齐，避免最后大冲突。
