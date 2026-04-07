@@ -1,0 +1,217 @@
+{
+  "account_id": 1,
+  "scenario_id": 1,
+  "granularity": "day",
+  "series": [
+    {
+      "period_key": "20260401",
+      "period_start_date": "2026-04-01",
+      "simulation_stage_code": "baseline_period",
+      "metrics": {
+        "spend": 1689.84,
+        "payment_conversions": 77,
+        "payment_roi": 4.4087
+      }
+    },
+    {
+      "period_key": "20260402",
+      "period_start_date": "2026-04-02",
+      "simulation_stage_code": "baseline_period",
+      "metrics": {
+        "spend": 1730.4,
+        "payment_conversions": 80,
+        "payment_roi": 4.473
+      }
+    },
+    {
+      "period_key": "20260403",
+      "period_start_date": "2026-04-03",
+      "simulation_stage_code": "baseline_period",
+      "metrics": {
+        "spend": 1769.44,
+        "payment_conversions": 82,
+        "payment_roi": 4.4816
+      }
+    },
+    {
+      "period_key": "20260404",
+      "period_start_date": "2026-04-04",
+      "simulation_stage_code": "baseline_period",
+      "metrics": {
+        "spend": 1748.96,
+        "payment_conversions": 81,
+        "payment_roi": 4.4884
+      }
+    },
+    {
+      "period_key": "20260405",
+      "period_start_date": "2026-04-05",
+      "simulation_stage_code": "baseline_period",
+      "metrics": {
+        "spend": 2135.36,
+        "payment_conversions": 93,
+        "payment_roi": 4.1314
+      }
+    },
+    {
+      "period_key": "20260406",
+      "period_start_date": "2026-04-06",
+      "simulation_stage_code": "baseline_period",
+      "metrics": {
+        "spend": 1810.52,
+        "payment_conversions": 83,
+        "payment_roi": 4.4186
+      }
+    },
+    {
+      "period_key": "20260407",
+      "period_start_date": "2026-04-07",
+      "simulation_stage_code": "baseline_period",
+      "metrics": {
+        "spend": 2162.79,
+        "payment_conversions": 94,
+        "payment_roi": 4.1169
+      }
+    },
+    {
+      "period_key": "20260408",
+      "period_start_date": "2026-04-08",
+      "simulation_stage_code": "scale_up_start",
+      "metrics": {
+        "spend": 2571.6,
+        "payment_conversions": 100,
+        "payment_roi": 3.6701
+      }
+    },
+    {
+      "period_key": "20260409",
+      "period_start_date": "2026-04-09",
+      "simulation_stage_code": "scale_up_start",
+      "metrics": {
+        "spend": 2605.84,
+        "payment_conversions": 100,
+        "payment_roi": 3.6111
+      }
+    },
+    {
+      "period_key": "20260410",
+      "period_start_date": "2026-04-10",
+      "simulation_stage_code": "scale_up_start",
+      "metrics": {
+        "spend": 2579.67,
+        "payment_conversions": 100,
+        "payment_roi": 3.6478
+      }
+    },
+    {
+      "period_key": "20260411",
+      "period_start_date": "2026-04-11",
+      "simulation_stage_code": "scale_up_imbalance",
+      "metrics": {
+        "spend": 2804.0,
+        "payment_conversions": 96,
+        "payment_roi": 3.2168
+      }
+    },
+    {
+      "period_key": "20260412",
+      "period_start_date": "2026-04-12",
+      "simulation_stage_code": "scale_up_imbalance",
+      "metrics": {
+        "spend": 2860.12,
+        "payment_conversions": 99,
+        "payment_roi": 3.2558
+      }
+    },
+    {
+      "period_key": "20260413",
+      "period_start_date": "2026-04-13",
+      "simulation_stage_code": "scale_up_imbalance",
+      "metrics": {
+        "spend": 2815.35,
+        "payment_conversions": 95,
+        "payment_roi": 3.1648
+      }
+    },
+    {
+      "period_key": "20260414",
+      "period_start_date": "2026-04-14",
+      "simulation_stage_code": "scale_up_imbalance",
+      "metrics": {
+        "spend": 2867.55,
+        "payment_conversions": 99,
+        "payment_roi": 3.2369
+      }
+    },
+    {
+      "period_key": "20260415",
+      "period_start_date": "2026-04-15",
+      "simulation_stage_code": "ab_test_recovery",
+      "metrics": {
+        "spend": 3583.16,
+        "payment_conversions": 143,
+        "payment_roi": 3.6443
+      }
+    },
+    {
+      "period_key": "20260416",
+      "period_start_date": "2026-04-16",
+      "simulation_stage_code": "ab_test_recovery",
+      "metrics": {
+        "spend": 3564.68,
+        "payment_conversions": 141,
+        "payment_roi": 3.6121
+      }
+    },
+    {
+      "period_key": "20260417",
+      "period_start_date": "2026-04-17",
+      "simulation_stage_code": "ab_test_recovery",
+      "metrics": {
+        "spend": 3643.04,
+        "payment_conversions": 144,
+        "payment_roi": 3.6
+      }
+    },
+    {
+      "period_key": "20260418",
+      "period_start_date": "2026-04-18",
+      "simulation_stage_code": "ab_test_recovery",
+      "metrics": {
+        "spend": 3741.66,
+        "payment_conversions": 149,
+        "payment_roi": 3.6273
+      }
+    },
+    {
+      "period_key": "20260419",
+      "period_start_date": "2026-04-19",
+      "simulation_stage_code": "ab_test_recovery",
+      "metrics": {
+        "spend": 3723.03,
+        "payment_conversions": 148,
+        "payment_roi": 3.6186
+      }
+    },
+    {
+      "period_key": "20260420",
+      "period_start_date": "2026-04-20",
+      "simulation_stage_code": "ab_test_recovery",
+      "metrics": {
+        "spend": 3821.98,
+        "payment_conversions": 152,
+        "payment_roi": 3.6162
+      }
+    },
+    {
+      "period_key": "20260421",
+      "period_start_date": "2026-04-21",
+      "simulation_stage_code": "ab_test_recovery",
+      "metrics": {
+        "spend": 3896.28,
+        "payment_conversions": 155,
+        "payment_roi": 3.6106
+      }
+    }
+  ]
+}

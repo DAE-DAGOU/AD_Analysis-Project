@@ -1,0 +1,56 @@
+{
+  "account_id": 1,
+  "scenario_id": 1,
+  "granularity": "week",
+  "dimension_type": "placement",
+  "rows": [
+    {
+      "dimension_id": 2,
+      "dimension_code": "news_feed",
+      "dimension_name": "腾讯新闻信息流",
+      "impressions": 569020,
+      "clicks": 19076,
+      "spend": 23146.41,
+      "payment_conversions": 711,
+      "payment_revenue": 57294.0,
+      "ctr": 0.0335,
+      "payment_cvr": 0.0373,
+      "cpa": 32.5547,
+      "payment_roi": 2.4753,
+      "spend_share": 0.3982,
+      "vs_account_avg_payment_roi_delta": -1.2315
+    },
+    {
+      "dimension_id": 1,
+      "dimension_code": "moments_feed",
+      "dimension_name": "朋友圈信息流",
+      "impressions": 361500,
+      "clicks": 14741,
+      "spend": 22540.33,
+      "payment_conversions": 1227,
+      "payment_revenue": 127360.0,
+      "ctr": 0.0408,
+      "payment_cvr": 0.0832,
+      "cpa": 18.3703,
+      "payment_roi": 5.6503,
+      "spend_share": 0.3878,
+      "vs_account_avg_payment_roi_delta": 1.9435
+    },
+    {
+      "dimension_id": 3,
+      "dimension_code": "video_feed",
+      "dimension_name": "腾讯视频信息流",
+      "impressions": 279260,
+      "clicks": 11700,
+      "spend": 12438.53,
+      "payment_conversions": 373,
+      "payment_revenue": 30806.0,
+      "ctr": 0.0419,
+      "payment_cvr": 0.0319,
+      "cpa": 33.3473,
+      "payment_roi": 2.4767,
+      "spend_share": 0.214,
+      "vs_account_avg_payment_roi_delta": -1.2302
+    }
+  ]
+}

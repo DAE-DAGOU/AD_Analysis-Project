@@ -1,0 +1,162 @@
+\documentclass[10pt, a4paper]{article}
+
+% ----------------------------------------------------------------------------------------
+% 基础宏包配置
+% ----------------------------------------------------------------------------------------
+\usepackage[UTF8]{ctex}
+\usepackage[left=0.48in,top=0.42in,right=0.48in,bottom=0.38in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{changepage}
+\usepackage{array}
+
+% ----------------------------------------------------------------------------------------
+% 样式定义
+% ----------------------------------------------------------------------------------------
+\definecolor{darkblue}{RGB}{0, 70, 140}
+\definecolor{highlightred}{RGB}{180, 0, 0}
+
+\setlength{\parindent}{0pt}
+\linespread{1.05}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+}
+
+\setlist[itemize]{
+    topsep=2.4pt,
+    itemsep=1.8pt,
+    parsep=0pt,
+    partopsep=0pt,
+    leftmargin=1.28em,
+    labelsep=0.44em
+}
+
+\titleformat{\section}
+{\large\bfseries\color{darkblue}\raggedright}
+{}{0em}
+{}[\color{darkblue}\titlerule]
+
+\titlespacing{\section}{0pt}{6pt}{6pt}
+
+% ----------------------------------------------------------------------------------------
+% 自定义命令
+% ----------------------------------------------------------------------------------------
+\newcommand{\schoolEntry}[3]{
+  \noindent
+  \begin{tabular*}{\textwidth}{@{}p{0.33\textwidth}@{\extracolsep{\fill}}>{\centering\arraybackslash}p{0.34\textwidth}>{\raggedleft\arraybackslash}p{0.33\textwidth}@{}}
+    \textbf{#1} & #2 & #3
+  \end{tabular*}\par
+}
+
+\newcommand{\resumeEntry}[4]{
+  \vspace{3.5pt}
+  \noindent
+  {\normalsize
+  \begin{tabular*}{\textwidth}{@{}p{0.33\textwidth}@{\extracolsep{\fill}}>{\centering\arraybackslash}p{0.34\textwidth}>{\raggedleft\arraybackslash}p{0.33\textwidth}@{}}
+    \textbf{#1} & \textbf{#3} & {\small\textit{#2｜#4}}
+  \end{tabular*}\par}
+  \vspace{1pt}
+}
+
+\newcommand{\resumeDesc}[1]{
+  \vspace{-1pt}
+  {\footnotesize\noindent\textbf{#1}\par}
+  \vspace{2pt}
+}
+
+\newcommand{\projectEntry}[3]{
+  \noindent
+  \begin{tabular*}{\textwidth}{@{}p{0.60\textwidth}@{\extracolsep{\fill}}>{\centering\arraybackslash}p{0.15\textwidth}>{\raggedleft\arraybackslash}p{0.25\textwidth}@{}}
+    \textbf{#1} & \textit{#2} & \textit{#3}
+  \end{tabular*}\par
+}
+
+% ----------------------------------------------------------------------------------------
+% 正文开始
+% ----------------------------------------------------------------------------------------
+\begin{document}
+
+% --- 头部信息 ---
+\begin{center}
+    {\Large \textbf{孙嘉潞}} \\[2pt]
+    190-2095-2909 \quad | \quad \href{mailto:jialusun0615@gmail.com}{jialusun0615@gmail.com} \quad | \quad 深圳/上海/北京\\[3pt]
+    {\small\textcolor{highlightred}{「27届硕士｜5天/周｜4--6个月｜立刻到岗」}}
+\end{center}
+\vspace{-7pt}
+
+\section{个人简介}
+\noindent\textbf{用户增长与商业分析导向：}具备用户洞察、转化路径拆解与增长策略设计能力，拥有线上数据分析与线下零售转化双场景实践经验。希望在品牌增长、用户增长与市场分析方向持续发展。
+
+% --- 教育背景 ---
+\section{教育背景}
+
+\resumeEntry{香港中文大学（深圳）}{深圳}{硕士｜商业分析}{2025.09-2027.07}
+\begin{itemize}
+    \item \textbf{核心课程：}机器学习、统计分析、商业智能编程、数据库管理
+    \item \textbf{学业表现：}GPA 3.5/4.0 (Top 25\%)，具备利用数据分析支持经营判断、用户洞察与商业决策的基础能力。
+\end{itemize}
+
+\vspace{1pt}
+\resumeEntry{香港中文大学（深圳）}{深圳}{本科｜金融学}{2021.09-2025.07}
+\begin{itemize}
+    \item \textbf{学术荣誉：}GPA 3.6/4.0 (Top 20\%)，多次获得院长荣誉录 (Dean's List)
+    \item \textbf{核心能力与实践：}系统学习商业建模、金融/市场学理论，具备结构化分析与方案输出能力。
+\end{itemize}
+
+% --- 实习经历 ---
+\section{实习经历}
+
+% -- 实习1 --
+\resumeEntry{快牛智能｜墨西哥业务部}{上海}{策略实习生}{2025.12--2026.02}
+
+\resumeDesc{参与网贷平台增长策略部署，在海外市场扩张及转化率波动的背景下，负责用户分层、增长链路拆解与额度策略优化，支撑业务增长与运营效率提升。}
+
+\begin{itemize}
+    \item \textbf{用户分层与运营：}基于用户行为与逾期表现进行标签分层，识别活跃高价值客群的关键特征，输出核心用户白名单，支撑定向激活与转化触达，提升资源投放效率。
+    \item \textbf{转化链路拆解与归因：}针对GMV异常波动问题，拆解“注册—进件—正审—下单—放款”转化路径，通过下钻分析识别正审通过率为核心转化瓶颈，推动关键环节优化，促进整体转化效率修复与回升。
+    \item \textbf{活动策略设计：}围绕续贷转化提升目标，参与差异化转化激励策略设计，并跟进效果验证与优化，在风险可控前提下实现下单率提升10pp，带动月GMV同比增长20\%。
+\end{itemize}
+
+% -- 实习2 --
+\resumeEntry{中式珠宝零售门店｜私域增长}{烟台}{用户增长实习生}{2025.09--2025.12}
+\resumeDesc{基于某20年线下玉器门店私域沉淀，围绕年前节点型需求开展重点客户梳理、场景化活动设计与定向触达，提升高价值客户转化效率。}
+
+\begin{itemize}
+    \item \textbf{消费场景拆解与洞察：}基于历史交易记录、150--200 位核心老客的深度访谈与行为分析，识别本命年、平安祈福、礼赠等高频需求场景，提炼高客单成交的核心触发因素。
+    \item \textbf{活动设计与落地：}围绕年前需求高峰策划“本命年专属定制”“平安祈福系列”等主题活动，将商品表达由材质导向包装为场景导向；通过私域定向触达取代广域曝光，实现了 65\% 的到店增量提升。
+    \item \textbf{私域转化承接：}针对玉器非标、单件库存有限的特点，搭建“场景款式池”承接差异化需求，带动高客单成交增长，并推动门店当月营收同比增长 150\%。
+\end{itemize}
+
+% --实习3--
+\resumeEntry{中邮证券｜研究所}{深圳}{行业研究实习生}{2024.04--2024.07}
+\resumeDesc{围绕轮胎行业开展基本面与供应链分析，拆解盈利模式与成本结构，提炼关键竞争要素，支撑行业对比与企业布局判断。}
+
+\begin{itemize}
+    \item \textbf{行业分析与拆解：}基于海关总署、Wind 等信息源梳理全球进出口与龙头企业产能结构，拆分轮胎行业龙头收入并预测未来增长，系统拆解行业盈利模式与核心驱动因素。
+    \item \textbf{数据分析支撑决策：}参与公司年报与行业调研信息整理，输出企业点评，提炼不同产区产能、成本与政策差异，识别供应链竞争要素，为行业报告与企业对比分析提供数据支撑。
+\end{itemize}
+
+% --- 项目经历 ---
+\section{项目经历}
+
+\resumeEntry{流媒体会员分层策略课题}{深圳}{ }{2026.09--2026.12}
+\begin{itemize}
+    \item \textbf{商业分析洞察：}拆解平台收入结构与动漫上游产能，识别行业竞争加剧问题，并通过多维 EDA 锁定核心客群画像，结合 RFM 模型提出商业方案。
+    \item \textbf{用户分层与内容聚类分析：}将10万+ 动漫作品指标提炼为“热度、内容、质量”三大维度，运用 K-Means实现内容分层，并结合逻辑回归定义不同簇群的商业定位与引流价值。
+    \item \textbf{活动策略与订阅转化设计：}基于分层结果设计差异化资源组合与入门订阅计划，优化内容利用率与价值分配逻辑，推动用户向高阶订阅计划跃迁。
+\end{itemize}
+
+% --- 专业技能与证书 ---
+\section{技能证书}
+\begin{itemize}
+    \item \textbf{商业分析与增长运营：}用户分层、异动归因、转化漏斗分析、竞品与行业分析、问卷设计等，对商业化业务有基本认知。
+    \item \textbf{数据分析：}SQL（熟练）、Excel（熟练）、Python（掌握）、R（掌握）；熟悉 Tableau、BI 看板搭建；掌握Vibe Coding和AI提效工具。
+    \item \textbf{证书/语言：}FRM 一级；雅思 6.5，CET-4/6 通过；适应全英文教学环境，具备良好的英语商务阅读与基本沟通能力。
+\end{itemize}
+
+\end{document}

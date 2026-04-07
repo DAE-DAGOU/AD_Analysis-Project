@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "experiment_id": 1,
+      "experiment_code": "exp_creative_recovery_001",
+      "experiment_name": "创意修复实验001",
+      "status": "completed",
+      "start_date": "2026-04-15",
+      "end_date": "2026-04-21"
+    }
+  ]
+}

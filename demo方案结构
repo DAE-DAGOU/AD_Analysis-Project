@@ -1,0 +1,8 @@
+project/
+  PRD.md
+  metric_dictionary.md
+  simulation_rules.md
+  page_spec.md
+  README.md
+  data/
+    sample_data.csv

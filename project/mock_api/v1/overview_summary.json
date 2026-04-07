@@ -1,0 +1,33 @@
+{
+  "account_id": 1,
+  "scenario_id": 1,
+  "granularity": "week",
+  "period": {
+    "date_from": "2026-04-01",
+    "date_to": "2026-04-21",
+    "period_key": "202616"
+  },
+  "metrics": {
+    "impressions": 1209780,
+    "clicks": 45517,
+    "spend": 58125.27,
+    "payment_conversions": 2311,
+    "payment_revenue": 215460.0,
+    "ctr": 0.0376,
+    "cpc": 1.277,
+    "cpm": 48.0461,
+    "payment_cvr": 0.0508,
+    "cpa": 25.1516,
+    "payment_roi": 3.7068
+  },
+  "comparison": {
+    "wow_change_rate": 0.067,
+    "mom_change_rate": null
+  },
+  "anomaly_summary": {
+    "signal_level": "warning",
+    "signal_title": "扩量后投产走弱后进入修复",
+    "signal_message": "扩量阶段新闻信息流与宽泛人群消耗占比提升导致支付效率承压，测试修复期创意 Test 带动支付转化率与支付ROI 回升。",
+    "suggested_dimension_type": "placement"
+  }
+}

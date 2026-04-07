@@ -1,0 +1,132 @@
+{
+  "experiment_id": 1,
+  "granularity": "day",
+  "series": [
+    {
+      "experiment_group": "control",
+      "period_key": "20260415",
+      "metrics": {
+        "spend": 1016.26,
+        "payment_cvr": 0.036,
+        "payment_roi": 2.3616
+      }
+    },
+    {
+      "experiment_group": "test",
+      "period_key": "20260415",
+      "metrics": {
+        "spend": 804.21,
+        "payment_cvr": 0.0437,
+        "payment_roi": 3.32
+      }
+    },
+    {
+      "experiment_group": "control",
+      "period_key": "20260416",
+      "metrics": {
+        "spend": 1007.72,
+        "payment_cvr": 0.0363,
+        "payment_roi": 2.3816
+      }
+    },
+    {
+      "experiment_group": "test",
+      "period_key": "20260416",
+      "metrics": {
+        "spend": 812.97,
+        "payment_cvr": 0.0432,
+        "payment_roi": 3.2843
+      }
+    },
+    {
+      "experiment_group": "control",
+      "period_key": "20260417",
+      "metrics": {
+        "spend": 1026.02,
+        "payment_cvr": 0.0357,
+        "payment_roi": 2.3391
+      }
+    },
+    {
+      "experiment_group": "test",
+      "period_key": "20260417",
+      "metrics": {
+        "spend": 855.6,
+        "payment_cvr": 0.0436,
+        "payment_roi": 3.3158
+      }
+    },
+    {
+      "experiment_group": "control",
+      "period_key": "20260418",
+      "metrics": {
+        "spend": 1045.54,
+        "payment_cvr": 0.0362,
+        "payment_roi": 2.372
+      }
+    },
+    {
+      "experiment_group": "test",
+      "period_key": "20260418",
+      "metrics": {
+        "spend": 898.38,
+        "payment_cvr": 0.044,
+        "payment_roi": 3.3438
+      }
+    },
+    {
+      "experiment_group": "control",
+      "period_key": "20260419",
+      "metrics": {
+        "spend": 1037.0,
+        "payment_cvr": 0.0365,
+        "payment_roi": 2.3915
+      }
+    },
+    {
+      "experiment_group": "test",
+      "period_key": "20260419",
+      "metrics": {
+        "spend": 906.99,
+        "payment_cvr": 0.0435,
+        "payment_roi": 3.3121
+      }
+    },
+    {
+      "experiment_group": "control",
+      "period_key": "20260420",
+      "metrics": {
+        "spend": 1055.3,
+        "payment_cvr": 0.0358,
+        "payment_roi": 2.35
+      }
+    },
+    {
+      "experiment_group": "test",
+      "period_key": "20260420",
+      "metrics": {
+        "spend": 949.77,
+        "payment_cvr": 0.0439,
+        "payment_roi": 3.3387
+      }
+    },
+    {
+      "experiment_group": "control",
+      "period_key": "20260421",
+      "metrics": {
+        "spend": 1073.6,
+        "payment_cvr": 0.0364,
+        "payment_roi": 2.3845
+      }
+    },
+    {
+      "experiment_group": "test",
+      "period_key": "20260421",
+      "metrics": {
+        "spend": 991.38,
+        "payment_cvr": 0.0442,
+        "payment_roi": 3.367
+      }
+    }
+  ]
+}

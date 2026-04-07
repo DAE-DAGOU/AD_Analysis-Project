@@ -1,0 +1,41 @@
+{
+  "experiment_id": 1,
+  "experiment_name": "创意修复实验001",
+  "objective": "验证新创意是否改善支付转化率与支付ROI",
+  "status": "completed",
+  "scope": {
+    "audience_segment": "broad_audience",
+    "placements": [
+      "news_feed",
+      "video_feed"
+    ],
+    "date_from": "2026-04-15",
+    "date_to": "2026-04-21"
+  },
+  "groups": [
+    {
+      "experiment_group": "control",
+      "metrics": {
+        "ctr": 0.0332,
+        "payment_cvr": 0.0361,
+        "cpa": 33.7741,
+        "payment_roi": 2.3687
+      }
+    },
+    {
+      "experiment_group": "test",
+      "metrics": {
+        "ctr": 0.0406,
+        "payment_cvr": 0.0437,
+        "cpa": 25.0778,
+        "payment_roi": 3.3274
+      }
+    }
+  ],
+  "comparison": {
+    "delta_ctr_vs_control": 0.0074,
+    "delta_payment_cvr_vs_control": 0.0076,
+    "delta_cpa_vs_control": -8.6963,
+    "delta_payment_roi_vs_control": 0.9587
+  }
+}

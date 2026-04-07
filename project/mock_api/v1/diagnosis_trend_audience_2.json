@@ -1,0 +1,202 @@
+{
+  "account_id": 1,
+  "scenario_id": 1,
+  "dimension_type": "audience",
+  "dimension_id": 2,
+  "dimension_name": "宽泛人群",
+  "series": [
+    {
+      "period_key": "20260401",
+      "period_start_date": "2026-04-01",
+      "metrics": {
+        "spend": 704.4,
+        "payment_cvr": 0.0392,
+        "payment_roi": 2.6122
+      }
+    },
+    {
+      "period_key": "20260402",
+      "period_start_date": "2026-04-02",
+      "metrics": {
+        "spend": 722.4,
+        "payment_cvr": 0.0399,
+        "payment_roi": 2.6578
+      }
+    },
+    {
+      "period_key": "20260403",
+      "period_start_date": "2026-04-03",
+      "metrics": {
+        "spend": 740.4,
+        "payment_cvr": 0.0405,
+        "payment_roi": 2.7012
+      }
+    },
+    {
+      "period_key": "20260404",
+      "period_start_date": "2026-04-04",
+      "metrics": {
+        "spend": 732.0,
+        "payment_cvr": 0.0393,
+        "payment_roi": 2.623
+      }
+    },
+    {
+      "period_key": "20260405",
+      "period_start_date": "2026-04-05",
+      "metrics": {
+        "spend": 1116.6,
+        "payment_cvr": 0.037,
+        "payment_roi": 2.599
+      }
+    },
+    {
+      "period_key": "20260406",
+      "period_start_date": "2026-04-06",
+      "metrics": {
+        "spend": 769.2,
+        "payment_cvr": 0.0406,
+        "payment_roi": 2.7041
+      }
+    },
+    {
+      "period_key": "20260407",
+      "period_start_date": "2026-04-07",
+      "metrics": {
+        "spend": 1133.55,
+        "payment_cvr": 0.0374,
+        "payment_roi": 2.6324
+      }
+    },
+    {
+      "period_key": "20260408",
+      "period_start_date": "2026-04-08",
+      "metrics": {
+        "spend": 1496.51,
+        "payment_cvr": 0.0318,
+        "payment_roi": 2.2105
+      }
+    },
+    {
+      "period_key": "20260409",
+      "period_start_date": "2026-04-09",
+      "metrics": {
+        "spend": 1528.72,
+        "payment_cvr": 0.0319,
+        "payment_roi": 2.2175
+      }
+    },
+    {
+      "period_key": "20260410",
+      "period_start_date": "2026-04-10",
+      "metrics": {
+        "spend": 1514.83,
+        "payment_cvr": 0.0322,
+        "payment_roi": 2.2379
+      }
+    },
+    {
+      "period_key": "20260411",
+      "period_start_date": "2026-04-11",
+      "metrics": {
+        "spend": 1729.3,
+        "payment_cvr": 0.0282,
+        "payment_roi": 1.9141
+      }
+    },
+    {
+      "period_key": "20260412",
+      "period_start_date": "2026-04-12",
+      "metrics": {
+        "spend": 1762.35,
+        "payment_cvr": 0.0283,
+        "payment_roi": 1.9247
+      }
+    },
+    {
+      "period_key": "20260413",
+      "period_start_date": "2026-04-13",
+      "metrics": {
+        "spend": 1749.35,
+        "payment_cvr": 0.0279,
+        "payment_roi": 1.8921
+      }
+    },
+    {
+      "period_key": "20260414",
+      "period_start_date": "2026-04-14",
+      "metrics": {
+        "spend": 1780.05,
+        "payment_cvr": 0.0287,
+        "payment_roi": 1.9505
+      }
+    },
+    {
+      "period_key": "20260415",
+      "period_start_date": "2026-04-15",
+      "metrics": {
+        "spend": 2464.61,
+        "payment_cvr": 0.0374,
+        "payment_roi": 2.6893
+      }
+    },
+    {
+      "period_key": "20260416",
+      "period_start_date": "2026-04-16",
+      "metrics": {
+        "spend": 2458.41,
+        "payment_cvr": 0.037,
+        "payment_roi": 2.6627
+      }
+    },
+    {
+      "period_key": "20260417",
+      "period_start_date": "2026-04-17",
+      "metrics": {
+        "spend": 2533.25,
+        "payment_cvr": 0.0372,
+        "payment_roi": 2.6823
+      }
+    },
+    {
+      "period_key": "20260418",
+      "period_start_date": "2026-04-18",
+      "metrics": {
+        "spend": 2610.53,
+        "payment_cvr": 0.0374,
+        "payment_roi": 2.6975
+      }
+    },
+    {
+      "period_key": "20260419",
+      "period_start_date": "2026-04-19",
+      "metrics": {
+        "spend": 2604.18,
+        "payment_cvr": 0.0375,
+        "payment_roi": 2.7041
+      }
+    },
+    {
+      "period_key": "20260420",
+      "period_start_date": "2026-04-20",
+      "metrics": {
+        "spend": 2680.24,
+        "payment_cvr": 0.0377,
+        "payment_roi": 2.7203
+      }
+    },
+    {
+      "period_key": "20260421",
+      "period_start_date": "2026-04-21",
+      "metrics": {
+        "spend": 2754.06,
+        "payment_cvr": 0.0379,
+        "payment_roi": 2.7371
+      }
+    }
+  ],
+  "diagnosis": {
+    "signal_level": "warning",
+    "signal_message": "宽泛人群在全周期内承担了更高消耗，但支付转化率低于账户均值，建议结合资源位和创意继续收敛流量质量。"
+  }
+}
