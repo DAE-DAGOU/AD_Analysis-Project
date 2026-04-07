@@ -12,12 +12,26 @@
   - 维表与实验主数据种子脚本
 - `sample_fct_ad_performance_daily.csv`
   - 核心事实表样例数据（21 天主叙事窗口）
+- `load_sample_data.sql`
+  - 一键清空并重载维表 + 事实表样例数据
+- `validate_data.sql`
+  - 快速数据校验脚本（主键、链路约束、阶段分布）
 
 ## 推荐使用顺序
 
 1. 执行 `schema.sql`
-2. 执行 `seed_dimensions.sql`
-3. 导入 `sample_fct_ad_performance_daily.csv` 到 `fct_ad_performance_daily`
+2. 执行 `load_sample_data.sql`
+3. 执行 `validate_data.sql`
+
+## 快速命令（PostgreSQL）
+
+在仓库根目录执行：
+
+```bash
+psql "$DATABASE_URL" -f project/Database/schema.sql
+psql "$DATABASE_URL" -f project/Database/load_sample_data.sql
+psql "$DATABASE_URL" -f project/Database/validate_data.sql
+```
 
 ## 事实表导入字段顺序
 
@@ -42,3 +56,4 @@ payment_revenue
 - 当前样例数据用于验证页面逻辑与指标口径，不代表真实投放账户
 - 当前样例数据覆盖 21 天，可直接支撑基线稳定、扩量失衡、测试修复的阶段演示
 - 指标口径和页面逻辑仍以 `project` 目录中的产品文档为准
+- `validate_data.sql` 中 `row_count_fact=93` 是当前 V1 样例数据的固定期望值
