@@ -129,6 +129,52 @@ main {
   cursor: pointer;
 }
 
+.mini-tabs {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.mini-tabs button {
+  margin-top: 0;
+  background: #fff;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.mini-tabs button.active {
+  background: var(--brand-soft);
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.sort-row {
+  margin-bottom: 8px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sort-row label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.sort-row select {
+  margin-left: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 8px;
+}
+
+.ghost-btn {
+  margin-top: 0;
+  padding: 4px 8px;
+  background: #fff;
+  color: var(--brand);
+  border: 1px solid var(--brand);
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

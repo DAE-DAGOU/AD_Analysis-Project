@@ -6,6 +6,7 @@ const fallbackFiles = {
   overviewSummary: "../project/mock_api/v1/overview_summary.json",
   overviewTrend: "../project/mock_api/v1/overview_trend_day.json",
   diagnosisBreakdown: "../project/mock_api/v1/diagnosis_breakdown_placement.json",
+  diagnosisTrend: "../project/mock_api/v1/diagnosis_trend_audience_2.json",
   experiments: "../project/mock_api/v1/experiments.json",
 };
 
@@ -13,6 +14,13 @@ const filters = {
   granularity: document.getElementById("granularity"),
   dateFrom: document.getElementById("date-from"),
   dateTo: document.getElementById("date-to"),
+};
+
+const diagnosisState = {
+  dimensionType: "placement",
+  sortBy: "spend",
+  sortOrder: "desc",
+  selectedDimensionId: null,
 };
 
 function formatNumber(value) {
@@ -150,18 +158,48 @@ async function renderOverview() {
 }
 
 async function renderDiagnosis() {
-  const payload = await readJson(fallbackFiles.diagnosisBreakdown);
+  const [payload, trend] = await Promise.all([
+    readJson(fallbackFiles.diagnosisBreakdown),
+    readJson(fallbackFiles.diagnosisTrend),
+  ]);
   const rows = payload.rows || [];
+  const sortFactor = diagnosisState.sortOrder === "asc" ? 1 : -1;
+  const sortedRows = rows
+    .slice()
+    .sort((a, b) => {
+      const av = a[diagnosisState.sortBy] ?? 0;
+      const bv = b[diagnosisState.sortBy] ?? 0;
+      if (av === bv) return 0;
+      return av > bv ? sortFactor : -sortFactor;
+    });
 
-  const tableRows = rows
-    .slice(0, 5)
+  if (!diagnosisState.selectedDimensionId && sortedRows[0]) {
+    diagnosisState.selectedDimensionId = sortedRows[0].dimension_id;
+  }
+
+  const tableRows = sortedRows
+    .slice(0, 10)
     .map(
       (r) => `
       <tr>
-        <td>${r.dimension_name}</td>
+        <td>${r.dimension_name}${r.dimension_id === diagnosisState.selectedDimensionId ? "（已选中）" : ""}</td>
         <td>${formatNumber(r.spend)}</td>
         <td>${formatNumber(r.payment_conversions)}</td>
-        <td>${formatNumber(r.payment_roi)}</td>
+        <td>${formatDecimal(r.payment_roi, 4)}</td>
+        <td><button class="ghost-btn" data-row-id="${r.dimension_id}" type="button">查看趋势</button></td>
+      </tr>
+    `
+    )
+    .join("");
+
+  const trendRows = (trend.series || [])
+    .map(
+      (s) => `
+      <tr>
+        <td>${s.period_start_date}</td>
+        <td>${formatNumber(s.metrics.spend)}</td>
+        <td>${formatPercent(s.metrics.payment_cvr)}</td>
+        <td>${formatDecimal(s.metrics.payment_roi, 4)}</td>
       </tr>
     `
     )
@@ -169,11 +207,35 @@ async function renderDiagnosis() {
 
   app.innerHTML = `
     <section class="panel">
-      <h2>分维诊断（资源位）</h2>
+      <h2>分维诊断</h2>
       <p>${currentFilterText()}</p>
+      <div class="mini-tabs">
+        <button class="${diagnosisState.dimensionType === "audience" ? "active" : ""}" data-dimension="audience" type="button">人群</button>
+        <button class="${diagnosisState.dimensionType === "placement" ? "active" : ""}" data-dimension="placement" type="button">资源位</button>
+        <button class="${diagnosisState.dimensionType === "creative" ? "active" : ""}" data-dimension="creative" type="button">创意</button>
+      </div>
+      <div class="hint">当前 mock 重点演示资源位诊断；人群/创意将复用同一交互框架接入对应数据。</div>
     </section>
     <section class="panel">
-      <h2>Top 维度表现</h2>
+      <h2>维度表现表</h2>
+      <div class="sort-row">
+        <label>
+          排序字段
+          <select id="diagnosis-sort-by">
+            <option value="spend" ${diagnosisState.sortBy === "spend" ? "selected" : ""}>花费</option>
+            <option value="payment_roi" ${diagnosisState.sortBy === "payment_roi" ? "selected" : ""}>支付ROI</option>
+            <option value="payment_conversions" ${diagnosisState.sortBy === "payment_conversions" ? "selected" : ""}>支付转化量</option>
+            <option value="cpa" ${diagnosisState.sortBy === "cpa" ? "selected" : ""}>转化成本</option>
+          </select>
+        </label>
+        <label>
+          排序方式
+          <select id="diagnosis-sort-order">
+            <option value="desc" ${diagnosisState.sortOrder === "desc" ? "selected" : ""}>降序</option>
+            <option value="asc" ${diagnosisState.sortOrder === "asc" ? "selected" : ""}>升序</option>
+          </select>
+        </label>
+      </div>
       <table>
         <thead>
           <tr>
@@ -181,15 +243,56 @@ async function renderDiagnosis() {
             <th>花费</th>
             <th>支付转化量</th>
             <th>支付ROI</th>
+            <th>趋势</th>
           </tr>
         </thead>
         <tbody>
           ${tableRows}
         </tbody>
       </table>
-      <div class="hint">下一步：在 Step 6 分支补维度切换、趋势图和诊断结论联动。</div>
+    </section>
+    <section class="panel">
+      <h2>维度趋势详情</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>花费</th>
+            <th>支付转化率</th>
+            <th>支付ROI</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${trendRows}
+        </tbody>
+      </table>
+      <div class="hint">${trend.diagnosis?.signal_message ?? "暂无诊断结论"}</div>
     </section>
   `;
+
+  document.querySelectorAll(".mini-tabs button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      diagnosisState.dimensionType = btn.dataset.dimension;
+      renderDiagnosis();
+    });
+  });
+
+  document.getElementById("diagnosis-sort-by")?.addEventListener("change", (e) => {
+    diagnosisState.sortBy = e.target.value;
+    renderDiagnosis();
+  });
+
+  document.getElementById("diagnosis-sort-order")?.addEventListener("change", (e) => {
+    diagnosisState.sortOrder = e.target.value;
+    renderDiagnosis();
+  });
+
+  document.querySelectorAll("button[data-row-id]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      diagnosisState.selectedDimensionId = Number(btn.dataset.rowId);
+      renderDiagnosis();
+    });
+  });
 }
 
 async function renderExperiments() {
