@@ -119,6 +119,12 @@ main {
   color: var(--muted);
 }
 
+.section-note {
+  margin: 8px 0 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .panel button {
   margin-top: 12px;
   border: 1px solid var(--line);
@@ -173,6 +179,32 @@ main {
   background: #fff;
   color: var(--brand);
   border: 1px solid var(--brand);
+}
+
+.insight-list {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 10px;
+}
+
+.insight-item {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px;
+  background: #f9fbff;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.insight-item strong {
+  font-size: 13px;
+}
+
+.insight-item span {
+  font-size: 13px;
+  color: var(--muted);
 }
 
 .cards {
